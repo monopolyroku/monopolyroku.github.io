@@ -2055,7 +2055,7 @@ input, select, textarea {
 			display: block;
 			height: 100%;
 			left: 0;
-			opacity: 0.5;
+			opacity: 0.25;
 			position: absolute;
 			top: 0;
 			width: 100%;
@@ -2546,6 +2546,106 @@ input, select, textarea {
 		input[type="button"]:disabled,
 		.button.disabled,
 		.button:disabled {
+			background-color: #e7e7e7 !important;
+			border-color: #e7e7e7 !important;
+			color: #b2b2b2 !important;
+			cursor: default;
+		}
+
+/* Project button */
+
+	input[type="submit"],
+	input[type="reset"],
+	input[type="button"],
+	.project-button {
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		-ms-appearance: none;
+		appearance: none;
+		-moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+		-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+		-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+		background-color: transparent;
+		border-radius: 0.45em;
+		border: solid 3px #efefef;
+		color: #787878 !important;
+		cursor: pointer;
+		display: inline-block;
+		font-weight: 400;
+		height: 3.15em;
+		height: calc(2.75em + 6px);
+		line-height: 2.75em;
+		min-width: 10em;
+		padding: 0 1.5em;
+		text-align: center;
+		text-decoration: none;
+		white-space: nowrap;
+		margin-top: 0.7em;
+		margin-left: -1em;
+		margin-bottom: -4em;
+	}
+
+
+		.project-button:hover {
+			border-color: #FDFFFC;
+			color: #FF9F1C !important;
+		}
+
+		
+		.project-button:active {
+			background-color: rgba(73, 191, 157, 0.1);
+			border-color: #FDFFFC;
+			color: #FF9F1C !important;
+		}
+
+		
+		.project-button.icon {
+			padding-left: 1.35em;
+		}
+
+		
+			.project-button.icon:before {
+				margin-right: 0.5em;
+			}
+
+		
+		.project-button.fit {
+			min-width: 0;
+			width: 100%;
+		}
+
+		
+		.project-button.small {
+			font-size: 0.8em;
+		}
+
+		
+		.project-button.large {
+			font-size: 1.35em;
+		}
+
+		
+		.project-button.primary {
+			background-color: #49bf9d;
+			border-color: #49bf9d;
+			color: #ffffff !important;
+		}
+
+		
+		.project-button.primary:hover {
+			background-color: #5cc6a7;
+			border-color: #5cc6a7;
+		}
+
+		
+		.project-button.primary:active {
+			background-color: #3eb08f;
+			border-color: #3eb08f;
+		}
+
+		
+		.project-button:disabled {
 			background-color: #e7e7e7 !important;
 			border-color: #e7e7e7 !important;
 			color: #b2b2b2 !important;
