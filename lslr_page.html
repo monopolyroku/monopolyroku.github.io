@@ -5,30 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <title>Your Project Title</title>
+    <style>
+        header h1
+        {
+            padding-left: 30px; 
+            color: #000;
+        }
+
+        section h2
+        {
+            padding-left: 30px;
+            color: #000;
+        }
+
+        header h2
+        {
+            padding-left: 30px;
+            margin-top: -30px;
+        }
+
+        section p,
+        video {
+            padding-left: 40px;
+        }
+
+        section h3 {
+            padding-left: 40px;
+        }
+
+        header p {
+            padding-left: 30px;
+            margin-top: -30px;
+        }
+
+        section img {
+            padding-left: 40px;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Your Project Title</h1>
-        <p>A brief description of your project.</p>
+        <h1>Land-Based Security Locomotion Robot</h1>
+        <p>Robotics Engineering capability development through prototyping effort</p>
     </header>
 
     <main>
         <section>
-            <h2>Section 1</h2>
-            <p>Content for section 1 goes here.</p>
+            <h2>Lite kit</h2>
+            <img src="images/lslr/edited_lite_kit.jpg" alt="" width=700 height=610 />
+            <p>
+                The lite kit was a solo endeavour, where certain features were required to be implemented as stated in the image. </br>
+                Object tracking: Algorithm built using STM32 software coded in C communicating via SPI with the PixyCam </br>
+                Obstacle detection: Usage of ultrasonic sensors </br>
+                Drop detection: Usage of Time-of-flight sensors </br>
+                Octa-directional movement: Usage of Mecanum wheels, algorithm coded in Parallax Propeller tool in C </br>
+
+
+            </p>
         </section>
 
         <section>
-            <h2>Section 2</h2>
-            <p>Content for section 2 goes here.</p>
+            <h2>Video of functioning Lite kit</h2>
+            <video width=960 height=540 controls>
+                <source src="videos/object-follow.mp4" type="video/mp4">
+            </video>
+            <p>
+               Tested in my bedroom. As noticed in the video, the lit kit is able to </br>
+               1. Detect object </br>
+               2. Follow object </br>
+               3. Move in 8 directions </br>
+            </p>
+            <p>
+                The detection quality is highly dependent on the lighting condition of the room and settings of the PixyCam, </br>
+                it is crucial to adjust those settings depending on the surrounding environment before operation. 
+            </p>
         </section>
 
         <section>
-            <h2>Section 3</h2>
-            <p>Content for section 3 goes here.</p>
+            <h2>Production kit</h2>
+            <img src="images/lslr/edited_production_kit.jpg" alt="" width=700 height=533 />
+            <p>
+                The production kit was a team effort, where additional features were built-in on top of the lite kit's current features </br>
+                Armour plating: Additional suspension and metal guards for smoother operation </br>
+                Capture mechanism: A net gun can be ejected to capture detected intruders, to see it operate check out the video below</br>
+
+            </p>
         </section>
 
-        <!-- Add more sections as needed -->
+        <section>
+            <h2>Net gun video</h2>
+            <video width=960 height=540 controls>
+                <source src="videos/net-gun.mp4" type="video/mp4">
+            </video>
+        </section>
+
 
     </main>
 

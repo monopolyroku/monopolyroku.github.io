@@ -4,31 +4,97 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <title>Your Project Title</title>
+    <title>Systems Engineering Project 1</title>
+    <style>
+        header h1
+        {
+            padding-left: 30px; 
+            color: #000;
+        }
+
+        section h2
+        {
+            padding-left: 30px;
+            color: #000;
+        }
+
+        header h2
+        {
+            padding-left: 30px;
+            margin-top: -30px;
+        }
+
+        section p,
+        video {
+            padding-left: 40px;
+        }
+
+        section h3 {
+            padding-left: 40px;
+        }
+
+        header p {
+            padding-left: 30px;
+            margin-top: -30px;
+        }
+
+        section img {
+            padding-left: 40px;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Your Project Title</h1>
-        <p>A brief description of your project.</p>
+        <h1>ROS exploration</h1>
+        <p>Develop capabilities in robotics engineering to capitalise on new opportunities.</p>
     </header>
 
     <main>
+        
         <section>
-            <h2>Section 1</h2>
-            <p>Content for section 1 goes here.</p>
+            <h2>Arena design</h2>
+            <img src="images/limo/frozen-food.jpeg" alt="" width=960 height=540 />
+            <img src="images/limo/poultry-section.jpeg" alt="" width=960 height=540 />
+            <img src="images/limo/shelves.jpeg" alt="" width=960 height=540 />
+            <img src="images/limo/diary-section.jpeg" alt="" width=960 height=540 />
+            <img src="images/limo/team-arena.jpeg" alt="" width=960 height=540 />
+            <video width=960 height=540 controls>
+                <source src="videos/gantry.mp4" type="video/mp4">
+            </video>
+            <p>
+                As the theme of the arena section was a supermarket, the team and I went to supermarkets multiple time and selected the traits
+                we wanted to showcase in our arena design. </br> The furnitures were mostly fabricated using 3D printing while the packaging was done 
+                using sticker paper.
+            </p>
+        </section>
+        
+        <section>
+            <h2>ROS navigation</h2>
+            <video width=960 height=540 controls>
+                <source src="videos/gazebo-visualisation.mp4" type="video/mp4">
+            </video>
+            <p>
+                Before testing on the actual hardware, we ran simulations in gazebo and rviz (ROS visualisation) to test the feasibility
+                of the hardware robot navigating in our fabricated arena.
+            </p>
+            <video width=960 height=540 controls>
+                <source src="videos/arena-nav.mp4" type="video/mp4">
+            </video>
+            <p>
+                Using the ROS1 middleware framework, we utilized rviz to navigate the hardware limo robot to different points 
+                around the arena. </br> The robot that takes the shortest time to travel through every section of the arena wins the competition.
+            </p>
         </section>
 
         <section>
-            <h2>Section 2</h2>
-            <p>Content for section 2 goes here.</p>
+            <h2>Line tracing</h2>
+            <video width=960 height=540 controls>
+                <source src="videos/line-tracing.mp4" type="video/mp4">
+            </video>
+            <p>
+                The line tracing code was done using python, the robot that reaches the finishing point with the shortest time wins the competition.
+            </p>
         </section>
-
-        <section>
-            <h2>Section 3</h2>
-            <p>Content for section 3 goes here.</p>
-        </section>
-
-        <!-- Add more sections as needed -->
 
     </main>
 
