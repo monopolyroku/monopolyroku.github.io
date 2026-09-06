@@ -177,8 +177,8 @@
 		}
 
 		if (cmd === 'whoami') {
-			appendSpan('Wong Qi En - robotics engineer working in military robotics and design.\n', '');
-			appendSpan('Currently doing post grad studies in Singapore.\n', '');
+			appendSpan('Wong Qi En (@monopolyroku) - robotics engineer working in military robotics and design.\n', '');
+			appendSpan('Currently doing postgraduate studies in Singapore.\n', '');
 			return;
 		}
 
