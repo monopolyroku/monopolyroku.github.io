@@ -9,15 +9,37 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/retro.css" />
+		<link rel="stylesheet" href="assets/css/terminal.css" />
 	</head>
-	<body class="is-preload">
+	<body class="is-preload is-booting">
+
+		<!-- Terminal start screen -->
+			<div id="boot" role="dialog" aria-label="Terminal start screen">
+				<div class="boot-screen">
+					<div class="boot-titlebar">
+						<span>visitor@wqe-portfolio: ~</span>
+						<span>[ - ] [ o ] [ x ]</span>
+					</div>
+					<div class="boot-body">
+						<pre id="boot-log"></pre>
+						<div class="boot-prompt"><span class="boot-ps1">visitor@wqe-portfolio:~$ </span><span id="boot-typed"></span><span class="boot-caret"></span></div>
+						<input id="boot-input" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Terminal command input" />
+						<div class="boot-hint">
+							KEYBOARD: type <kbd>init</kbd> then press <kbd>ENTER</kbd><br />
+							MOUSE: click the button below<br />
+							<button id="boot-init-btn" type="button">[ CLICK TO INIT ]</button>
+						</div>
+					</div>
+				</div>
+			</div>
 
 		<!-- Header -->
 			<header id="header">
 				<div class="inner">
 					<a href="#" class="image avatar"><img src="images/avatar.jpg" alt="" /></a>
-					<h1>I am <strong>Wong Qi En</strong>, an aspiring<br />
-					robotics engineer<br/>
+					<h1>I am <strong>Wong Qi En</strong>, <br/>
+					a robotics engineer<br/>
 					</h1>
 				</div>
 			</header>
@@ -28,14 +50,14 @@
 				<!-- One -->
 					<section id="one">
 						<header class="major">
-							<h3>🤖 Engaging in the exploration of robotics and design solutions to advance our society.<br/>
-							🎓 Currently a Robotics Systems Student at the Singapore Institute of Technology</h3>
+							<h3>🤖 Working in the field of military robotics and design.<br/>
+							🎓 Currently doing post grad studies in Singapore. </h3>
 						</header>
 						<header>
 							<h4>
-								Welcome to my portfolio site! I post about projects i've done during my time in polytechnic and university. These projects range
-								from robotics to design. I am actively seeking to explore potential career opportunities within the <u>robotics</u>, <u>software engineering</u>,
-								<u>web3</u> sectors. If you are hiring or sharing insights about the industry, feel free to reach out to me! I will be thrilled to learn more.
+								Welcome!!! This portfolio contains projects completed during my time in polytechnic and university. These projects range
+								from robotics to design. This portfolio will not show current projects I am working on as they are confidential. I am actively seeking to explore potential career opportunities within the <u>robotics</u> and <u>software engineering</u>
+								sectors. If you are hiring, feel free to reach out to me! I will be thrilled to learn more.
 							</h4>
 						</header>
 						
@@ -50,32 +72,32 @@
 					<h2>Projects</h2>
 					<div class="row">
 						<article class="col-6 col-12-xsmall work-item">
-							<a href="images/fulls/overall_lidar_cam_beige.jpg" class="image fit thumb"><img src="images/fulls/overall_lidar_cam_beige.jpg" alt="A picture of CHRD" /></a>
+							<a href="chrd_page.html" class="image fit thumb"><img src="images/fulls/overall_lidar_cam_beige.jpg" alt="A picture of CHRD" /></a>
 							<p>A robotics solution designed to decrease human resource </br> dependency within the library of Singapore Institute of Technology's Punggol campus.</p>
 							<ul><a href="chrd_page.html" class="project-button">Learn more</a></ul>
 						</article>
 						<article class="col-6 col-12-xsmall work-item">
-							<a href="images/fulls/smartair-p.jpg" class="image fit thumb"><img src="images/thumbs/smartair-p.jpg" alt="" /></a>
+							<a href="smartair_page.html" class="image fit thumb"><img src="images/thumbs/smartair-p.jpg" alt="" /></a>
 							<p>An advanced alternating air matttress for bed sores prevention capable of individually controlling cells based on data feedback.</p>
 							<ul><a href="smartair_page.html" class="project-button">Learn more</a></ul>
 						</article>
 						<article class="col-6 col-12-xsmall work-item">
-							<a href="images/fulls/Limo-bot2.jpg" class="image fit thumb"><img src="images/thumbs/Limo-bot2.jpg" alt="A picture of Limo robot" /></a>
+							<a href="limo_page.html" class="image fit thumb"><img src="images/thumbs/Limo-bot2.jpg" alt="A picture of Limo robot" /></a>
 							<p>Development of capabilities using ROS, ROS2, Gazebo </br> while exploring possible robotics use cases.</p>
 							<ul><a href="limo_page.html" class="project-button">Learn more</a></ul>
 						</article>
 						<article class="col-6 col-12-xsmall work-item">
-							<a href="images/fulls/LSLR.jpg" class="image fit thumb"><img src="images/thumbs/LSLR.jpg" alt="A picture of LSLR" /></a>
+							<a href="lslr_page.html" class="image fit thumb"><img src="images/thumbs/LSLR.jpg" alt="A picture of LSLR" /></a>
 							<p>Creation of four prototypes for a semi-autonomous system over the course of two trimesters.</p>
 							<ul><a href="lslr_page.html" class="project-button">Learn more</a></ul>
 						</article>
 						<article class="col-6 col-12-xsmall work-item">
-							<a href="images/fulls/cell-main.jpg" class="image fit thumb"><img src="images/thumbs/cell-main.jpg" alt="Cellverse web3 project" /></a>
+							<a href="cell_page.html" class="image fit thumb"><img src="images/thumbs/cell-main.jpg" alt="Cellverse web3 project" /></a>
 							<p>A Web3 gamified metaverse project on the Solana blockchain.</p>
 							<ul><a href="cell_page.html" class="project-button">Learn more</a></ul>
 						</article>
 						<article class="col-6 col-12-xsmall work-item">
-							<a href="images/fulls/fyp_cover.jpg" class="image fit thumb"><img src="images/thumbs/fyp_cover.jpg" alt="Final Year Project poster" /></a>
+							<a href="polyfyp_page.html" class="image fit thumb"><img src="images/thumbs/fyp_cover.jpg" alt="Final Year Project poster" /></a>
 							<p>A Polytechnic Final Year Project comparing the growth of cherry tomatoes using substrate media and hydroponics with the usage of IoT (Internet of Things) Systems.</p>
 							<ul><a href="polyfyp_page.html" class="project-button">Learn more</a></ul>
 						</article>
@@ -460,11 +482,11 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.poptrox.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script src="assets/js/terminal.js"></script>
 
 	</body>
 </html>

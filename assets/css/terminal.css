@@ -1,0 +1,195 @@
+/*
+	Terminal start screen shown before the portfolio loads.
+	Depends on variables + fonts defined in retro.css.
+*/
+
+	body.is-booting {
+		overflow: hidden;
+	}
+
+	#boot {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 9000;
+		background: #050509;
+		color: var(--rt-green);
+		font-family: var(--rt-body-font);
+		font-size: 22px;
+		line-height: 1.3em;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 2em;
+		text-shadow: 0 0 6px rgba(57, 255, 20, 0.45);
+		transform-origin: center center;
+	}
+
+		#boot.is-off {
+			animation: boot-poweroff 0.45s steps(6) forwards;
+		}
+
+		@keyframes boot-poweroff {
+			0%   { transform: scale(1, 1);    opacity: 1; }
+			60%  { transform: scale(1, 0.01); opacity: 1; }
+			100% { transform: scale(0, 0.01); opacity: 0; }
+		}
+
+	.boot-screen {
+		width: 100%;
+		max-width: 900px;
+		max-height: 100%;
+		overflow: hidden;
+		background: #0a0a12;
+		border: 4px solid var(--rt-border);
+		box-shadow: 8px 8px 0 var(--rt-shadow), inset 0 0 60px rgba(57, 255, 20, 0.08);
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.boot-titlebar {
+		font-family: var(--rt-pixel-font);
+		font-size: 0.45em;
+		line-height: 1em;
+		background: var(--rt-border);
+		color: #050509;
+		padding: 0.9em 1em;
+		text-shadow: none;
+		display: flex;
+		justify-content: space-between;
+		text-transform: uppercase;
+	}
+
+		.boot-titlebar span:last-child {
+			letter-spacing: 0.2em;
+		}
+
+	.boot-body {
+		padding: 1em 1.25em 1.25em 1.25em;
+		overflow-y: auto;
+	}
+
+	#boot-log {
+		font: inherit;
+		margin: 0;
+		white-space: pre-wrap;
+		word-break: break-word;
+		color: var(--rt-green);
+	}
+
+		#boot-log .ok    { color: var(--rt-cyan); }
+		#boot-log .warn  { color: var(--rt-yellow); }
+		#boot-log .err   { color: var(--rt-magenta); }
+		#boot-log .dim   { color: var(--rt-muted); }
+		#boot-log .cmd   { color: #ffffff; }
+
+	.boot-prompt {
+		display: none;
+		margin-top: 0.25em;
+		white-space: pre-wrap;
+		word-break: break-all;
+	}
+
+		#boot.is-ready .boot-prompt {
+			display: block;
+		}
+
+		.boot-ps1 {
+			color: var(--rt-cyan);
+		}
+
+		#boot-typed {
+			color: #ffffff;
+		}
+
+		.boot-caret {
+			display: inline-block;
+			width: 0.6em;
+			height: 1.1em;
+			vertical-align: -0.2em;
+			background: var(--rt-green);
+			animation: rt-blink 1s steps(1) infinite;
+		}
+
+	.boot-hint {
+		display: none;
+		margin: 1.5em 0 0 0;
+		padding-top: 1em;
+		border-top: 4px dashed var(--rt-muted);
+		color: var(--rt-muted);
+		text-shadow: none;
+		font-size: 0.85em;
+		line-height: 1.6em;
+	}
+
+		#boot.is-ready .boot-hint {
+			display: block;
+		}
+
+		.boot-hint kbd {
+			font-family: var(--rt-pixel-font);
+			font-size: 0.5em;
+			color: var(--rt-yellow);
+			border: 2px solid var(--rt-yellow);
+			padding: 0.3em 0.5em;
+			margin: 0 0.2em;
+			vertical-align: middle;
+		}
+
+	#boot-init-btn {
+		display: inline-block;
+		font-family: var(--rt-pixel-font);
+		font-size: 0.55em;
+		line-height: 1em;
+		padding: 1em 1.4em;
+		margin: 0.75em 0 0 0;
+		background: var(--rt-panel-alt);
+		border: 4px solid var(--rt-green);
+		color: var(--rt-green);
+		cursor: pointer;
+		box-shadow: 5px 5px 0 var(--rt-shadow);
+		text-transform: uppercase;
+		position: relative;
+		top: 0;
+		left: 0;
+		animation: rt-blink 1.6s steps(1) infinite;
+	}
+
+		#boot-init-btn:hover,
+		#boot-init-btn:focus {
+			animation: none;
+			background: var(--rt-green);
+			color: #050509;
+			outline: none;
+			top: 2px;
+			left: 2px;
+			box-shadow: 3px 3px 0 var(--rt-shadow);
+		}
+
+		#boot-init-btn:active {
+			top: 5px;
+			left: 5px;
+			box-shadow: 0 0 0 var(--rt-shadow);
+		}
+
+	#boot-input {
+		position: absolute;
+		opacity: 0;
+		width: 1px;
+		height: 1px;
+		left: -9999px;
+	}
+
+	@media screen and (max-width: 736px) {
+		#boot {
+			font-size: 17px;
+			padding: 0.75em;
+		}
+
+		.boot-body {
+			padding: 0.75em;
+		}
+	}
