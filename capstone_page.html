@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <title>Capstone Project: Swarm Behaviour</title>
+    <style>
+        header h1,
+        section h2 {
+            color: #000; 
+        }
+        header p {
+            margin-top: -30px;
+        }
+    </style>
+    <link rel="stylesheet" href="assets/css/retro.css" />
+</head>
+<body>
+    <header>
+        <h1>Capstone Project</h1>
+        <p>Nano-drone swarm system for GPS-denied indoor mapping (Singapore Institute of Technology, AY2024/2025)</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>Problem statement</h2>
+              <img src="images/capstone/problemStatement.png" alt="Problem statement" width=600 height=327 />
+            <p>
+                During military operations, soldiers often lack real-time spatial awareness of complex indoor environments. </br>
+                Current drone systems struggle in GPS-denied, cluttered spaces and rely on bulky hardware with high computational resources. </br>
+                The aim of this Capstone was to develop a swarm of nano-drones capable of mapping indoor environments using hardware with minimal computational resources, </br>
+                giving operators additional spatial awareness for rapid decision-making.
+            </p>
+        </section>
+
+        <section>
+            <h2>Objectives</h2>
+            <ul>
+                <li>Create a cohesive swarm consisting of at least three drones</li>
+                <li>Enable reliable local positioning and obstacle avoidance for each individual drone without GPS</li>
+                <li>Achieve collaborative mapping of a 2D indoor environment within software simulation</li>
+            </ul>
+            <p>
+                A swarm approach was chosen over a single drone for its redundancy and resilience: the cognitive load is distributed across multiple units, </br>
+                allowing complex problems to be solved through simple individual behaviour (inspired by ant colonies, bee swarms and bird flocks).
+            </p>
+        </section>
+
+        <section>
+            <h2>System architecture</h2>
+            <h3>Physical design</h3>
+            <div style="text-align: center;">
+                <img src="images/capstone/physicalDesign.jpg" alt="Physical design" width=600 height=327 />
+            </div>
+            <p>
+                Each drone unit is a COTS ESP-drone running on the ESP-IDF framework, with a custom 3D-printed sensor mount. </br>
+                MCU: ESP32-S2 (WiFi connectivity) </br>
+                Sensors: VL53L0X rangefinder (altitude), PMW3901 optical flow (x/y position), MPU6050 accelerometer + gyroscope </br>
+                Propulsion: 4x 716 motors with 46mm propellers </br>
+                Power: 1S 300mAh LiHV battery </br>
+                Manual Control Unit: Smartphone app (basic), or laptop with cfclient, Crazyradio dongle and Xbox controller (advanced, up to &lt;1km range)
+            </p>
+            <h3>Operational flow</h3>
+            <div style="text-align: center;">
+                <img src="images/capstone/opAnalysis.jpg" alt="Operational flow" width=600 height=327 />
+            </div>
+            <p>
+                Initialise: Drones perform a vertical take-off, activate autonomous mode and move to their designated wall based on a predefined sequence. </br>
+                Navigation: Drones locate a left/right wall and execute wall-following behaviour with division of labour, constantly avoiding obstacles using the Bug2 algorithm. </br>
+                Mapping: Obstacles are plotted on a shared 2D obstacle map, while each drone simultaneously builds a 2D map of the indoor environment.
+            </p>
+        </section>
+
+        <section>
+            <h2>Hardware development</h2>
+            <img src="images/capstone/sensor_mount_slicer.jpg" alt="Sensor mount in the Bambu Lab slicer showing a 1.47g print estimate" width=800 height=494 />
+            <p>
+                Sensor mounts were modelled in CAD and printed on a Bambu Lab 3D printer, going through three iterations to shave 2.5g of weight (final print: 1.47g). </br>
+                Sensor integration involved debugging SPI/I2C communication in the ESP-IDF environment, including a faulty optical flow sensor (misplaced resistor), </br>
+                an incorrect SPI mode in the upstream library, SPAD info timeouts and stop-variable failures on the rangefinder.
+            </p>
+            <p>
+                Flight tests revealed the drone's weight budget was the key constraint: </br>
+                716 motor lift: 23g each, 92g total for four motors </br>
+                Optimal thrust-to-weight ratio of 2:1 gives a 46g maximum take-off weight, leaving only ~12g payload on a 34g frame </br>
+                With sensors, mount and metal screws the unit weighed ~56-60g and flight time dropped to ~3 minutes, </br>
+                which was barely sufficient for the 9.6m x 6.3m test room. Plastic fasteners were sourced to trim weight further.
+            </p>
+        </section>
+
+        <section>
+            <h2>Software swarm framework</h2>
+            <img src="images/capstone/sim_env_3d.jpg" alt="Webots simulation environment with a drone trajectory drawn in red" width=800 height=516 />
+            <p>
+                Due to the hardware integration challenges, the project scope was shifted to a Software-in-the-Loop (SiL) simulation in Webots. </br>
+                The framework was built in three layers:
+            </p>
+            <ul>
+                <li><b>Base layer</b> - Wall-following with PID control for navigation, and the Bug2 algorithm for obstacle avoidance</li>
+                <li><b>Middle layer</b> - Swarm communication, allowing drones to exchange position data and share obstacle information</li>
+                <li><b>Top layer</b> - Mapping, producing both a shared obstacle map and an environment (wall) map</li>
+            </ul>
+            <h3>Swarm algorithm</h3>
+            <p>
+                Particle Swarm Optimisation (PSO) using Clerc's constriction coefficients was tried first, but drones collided within seconds of initialisation even after tuning. </br>
+                Reinforcement learning (DQN and policy gradient) was evaluated on OpenAI Gym but dropped due to computational cost on an ESP32 and insufficient training interactions with only three drones. </br>
+                The final implementation used a minimal Bee Colony Optimisation (BCO), where each drone acts as a "bee" scouting paths toward the target </br>
+                while sharing location data, using a fitness function based on Euclidean distance to the target.
+            </p>
+            <h3>Obstacle avoidance and obstacle mapping</h3>
+            <img src="images/capstone/obstacle_avoidance.jpg" alt="Diagram of a drone using its front rangefinder to detect an obstacle while tracking the right wall" width=600 height=327 />
+            <img src="images/capstone/deadlock.jpg" alt="Diagram of a drone stuck in a deadlock circling an obstacle" width=600 height=328 />
+            <p>
+                When the front rangefinder detects an obstacle at 0.5m, the drone rotates 45 degrees, aligns parallel to the surface and continues toward the goal. </br>
+                A known weakness of wall-following is the deadlock shown above: after avoiding an obstacle, the side rangefinder may lock onto the obstacle itself and circle it indefinitely. </br>
+                To handle trickier obstacles, a shared 2D obstacle map was devised without additional hardware: </br>
+                1. Drones whose translation/rotation goes out of bounds are logged as failed </br>
+                2. An obstacle ("X") with a buffer zone is marked on a 20m x 20m grid (1m cells) at the failure location </br>
+                3. The map is broadcast to the whole swarm </br>
+                4. Remaining drones adjust their velocity using a find-safe-path mechanism and a predictive velocity adjustment with three look-ahead danger levels (1.5s / 1s / 0.5s)
+            </p>
+            <h3>Environment mapping</h3>
+            <img src="images/capstone/mapping_front_sensor.jpg" alt="Diagram of wall mapping using the front rangefinder and yaw angle" width=800 height=450 />
+            <img src="images/capstone/mapping_side_sensor.jpg" alt="Diagram of wall mapping using the left rangefinder with a 90 degree yaw offset" width=800 height=450 />
+            <p>
+                Each drone uses its front, left and right rangefinders together with its yaw angle to compute wall coordinates: </br>
+                x-offset = distance x cos(yaw), y-offset = distance x sin(yaw) (side sensors offset by +/-90 degrees) </br>
+                World coordinates are converted into grid indices and printed as a 2D ASCII map every 5 seconds. </br>
+                Maps from individual drones are then compared and averaged across the swarm for consensus-based accuracy and redundancy.
+            </p>
+        </section>
+
+        <section>
+            <h2>Results</h2>
+            <h3>Navigation</h3>
+            <p>
+                Four unknown indoor environments with increasing obstacle difficulty were tested in simulation: </br>
+                Env #1 (3 obstacles, overturned furniture): Entire swarm navigated through successfully </br>
+                Env #2 (3 obstacles, rotated furniture): Two drones passed, one entered a wall-following deadlock around a shelf </br>
+                Env #3 (8 potted plants): One drone passed; irregular plant surfaces confused the rangefinders and blocked the walls </br>
+                Env #4 (Living room, study area, dining area): One drone crashed at a shelf in the study area, but after sharing the obstacle position </br>
+                the remaining two drones adjusted their trajectory and completed the full course through a blocked fridge and chairs.
+            </p>
+            <h3>Environment mapping</h3>
+            <img src="images/capstone/sim_env_floorplan.jpg" alt="Top-down view of the 9.6m x 6.3m simulation environment" width=700 height=535 />
+            <p>
+                The swarm successfully mapped the 9.6m x 6.3m simulation floorplan above as a 2D ASCII map with correct proportions and dimensions.
+            </p>
+            <img src="images/capstone/kitchen_floorplan.jpg" alt="Top-down view of the kitchen simulation environment" width=600 height=477 />
+            <img src="images/capstone/kitchen_3d.jpg" alt="3D view of the kitchen simulation environment" width=600 height=269 />
+            <img src="images/capstone/ascii_map.jpg" alt="2D ASCII map of the kitchen produced by the drone swarm" width=600 height=283 />
+            <p>
+                In a second, unseen kitchen environment, two drones produced the visually accurate ASCII map shown above ("#" marks walls, "3" marks the drone's trajectory), </br>
+                with the longest wall estimated at 6m versus the actual 5.47m, demonstrating the mapping algorithm's robustness regardless of wall placement and dimensions.
+            </p>
+        </section>
+
+        <section>
+            <h2>Conclusion and future work</h2>
+            <p>
+                The project established the foundations for a GPS-denied nano-drone swarm capable of navigating, avoiding obstacles and mapping unknown indoor environments </br>
+                with limited computational resources. Key lessons were the importance of weight budgeting on nano platforms and the value of simulating early to protect hardware. </br>
+                Future work includes real-world flight tests with lighter hardware, refined swarm coordination and failsafes, deadlock detection for wall-following, </br>
+                better division of labour ("divide and conquer" mapping) and camera integration for visual localisation.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Wong Qi En. All rights reserved.</p>
+    </footer>
+</body>
+</html>
