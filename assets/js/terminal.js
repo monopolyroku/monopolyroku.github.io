@@ -13,6 +13,7 @@
 	if (!boot) return;
 
 	var body = document.body;
+	var html = document.documentElement;
 	var log = document.getElementById('boot-log');
 	var typed = document.getElementById('boot-typed');
 	var input = document.getElementById('boot-input');
@@ -25,11 +26,24 @@
 	var skip = false;
 	try { skip = sessionStorage.getItem(STORAGE_KEY) === '1'; } catch (e) {}
 
+	function unlockPage() {
+		body.classList.remove('is-booting');
+		html.classList.remove('is-booting');
+		window.scrollTo(0, 0);
+	}
+
 	if (skip) {
 		boot.parentNode.removeChild(boot);
-		body.classList.remove('is-booting');
+		unlockPage();
 		return;
 	}
+
+	// Keep touch scrolling inside the terminal log; block it everywhere else on the overlay.
+	boot.addEventListener('touchmove', function (e) {
+		if (!bootBody || !bootBody.contains(e.target) || bootBody.scrollHeight <= bootBody.clientHeight) {
+			e.preventDefault();
+		}
+	}, { passive: false });
 
 	var bootLines = [
 		{ text: 'WQE-BIOS v2.0.26  (C) monopolyroku', cls: 'dim' },
@@ -139,7 +153,7 @@
 		boot.classList.add('is-off');
 		setTimeout(function () {
 			if (boot.parentNode) boot.parentNode.removeChild(boot);
-			body.classList.remove('is-booting');
+			unlockPage();
 		}, 500);
 	}
 
